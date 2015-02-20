@@ -1,0 +1,7 @@
+div.well
+  div(ng-repeat="item in model track by $index") {{item.label}}: {{item.value}}
+form(ng-submit="send()")
+  .input-group
+    input(type="text" class="form-control" ng-model="sendData")
+    span.input-group-btn
+      button(class="btn btn-default" type="submit") Send

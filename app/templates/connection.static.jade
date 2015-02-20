@@ -1,0 +1,8 @@
+.form-group
+  label(for="serial-port") Serial Port
+  select#serial-port.form-control(ng-model="serialPortSelected" ng-options="opt for opt in serialPort" ng-disabled="connected")
+.form-group
+  label(for="baudrate") Baudrate
+  select#baudrate.form-control(ng-model="baudrateSelected" ng-options="opt for opt in baudrate" ng-disabled="connected")
+button.btn.btn-primary.btn-block(ng-click="connect()" ng-if="!connected") Connect
+button.btn.btn-primary.btn-block(ng-click="disconnect()" ng-if="connected") Disconnect

@@ -1,0 +1,10 @@
+icon-font-font-face()
+.icon
+  font-style normal
+  &:before
+    display:inline-block
+    font-family icon-font-name
+  &.wrench:before
+    content icon-font-unicode("fa/wrench")
+  &.connection:before
+    content icon-font-unicode("fa/wifi")
