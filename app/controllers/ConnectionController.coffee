@@ -21,7 +21,7 @@ module.exports = ($scope, CoreService)->
         $scope.$apply()
     return
   #send request for update list of available ports
-  CoreService.emit "in-serial", message: "list"
+  CoreService.emit "in-serial", message: "status"
 
   $scope.connect = ->
     CoreService.emit "in-serial", message: ["open", $scope.serialPortSelected, $scope.baudrateSelected]

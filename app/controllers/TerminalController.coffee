@@ -13,6 +13,6 @@ module.exports = ($scope, CoreService)->
       $scope.model.push label:"in", value:message[1]
       $scope.$apply()
   $scope.send = ->
-    CoreService.emit "in-serial", message: ["write", $scope.sendData.toString().toUpperCase() + '\n\r']
+    CoreService.emit "in-serial", message: ["write", $scope.sendData.toString().toUpperCase() + '\r']
     $scope.sendData = ''
     return

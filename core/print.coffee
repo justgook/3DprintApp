@@ -66,7 +66,7 @@ class Printer
       @canSend = Q.defer()
       line = liner.read()
       if line
-        process.send ['line', line+'\n\r']
+        process.send ['line', line+'\r']
       else
         process.send 'end-print'
         do @stop
