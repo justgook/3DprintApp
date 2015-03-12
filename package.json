@@ -6,8 +6,8 @@
   "repository" : { "type" : "git", "url" : "https://github.com/justgook/3DprintApp.git"},
   "scripts": {
     "test": "gulp unit-testing --require coffee-script/register --gulpfile gulpfile.coffee",
-    "start": "DEBUG=true gulp --require coffee-script/register --gulpfile gulpfile.coffee",
-    "start-cli": " DEBUG=true gulp startWithServer --require coffee-script/register --gulpfile gulpfile.coffee",
+    "start": "gulp --require coffee-script/register --gulpfile gulpfile.coffee",
+    "start-cli": "gulp startWithServer --require coffee-script/register --gulpfile gulpfile.coffee",
     "postinstall": "napa"
   },
   "napa": {

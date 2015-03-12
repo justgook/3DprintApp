@@ -76,24 +76,24 @@ html(lang="en", ng-app="application")
               include ./templates/files.static.jade
         .col-md-8
 
-          div(role='tabpanel')
+          div(role='tabpanel' ng-init="tab='terminal'")
             ul.nav.nav-tabs(role='tablist')
-              li(role='presentation')
-                a(href='#temperature', aria-controls='home', role='tab', data-toggle='tab') Temperature
+              li(role='presentation' ng-class="{active:tab=='temperature'}")
+                a(href='#temperature', ng-click="tab='temperature'", aria-controls='home', role='tab', data-toggle='tab') Temperature
               li(role='presentation')
                 a(href='#control', aria-controls='profile', role='tab', data-toggle='tab') Control
               li(role='presentation')
                 a(href='#gcode', aria-controls='messages', role='tab', data-toggle='tab') GCode Viewer
-              li.active(role='presentation')
-                a(href='#terminal', aria-controls='settings', role='tab', data-toggle='tab') Terminal
+              li(role='presentation' ng-class="{active:tab=='terminal'}")
+                a(href='#terminal', aria-controls='settings', role='tab', ng-click="tab='terminal'" data-toggle='tab') Terminal
               li(role='presentation')
                 a(href='#timelapse', aria-controls='settings', role='tab', data-toggle='tab') Timelapse
             br
             .tab-content
-              #temperature.tab-pane(role='tabpanel') 1...
+              #temperature.tab-pane(role='tabpanel', ng-class="{active:tab=='temperature'}") 1...
               #control.tab-pane(role='tabpanel') 2...
               #gcode.tab-pane(role='tabpanel') 3...
-              #terminal.tab-pane.active(role='tabpanel', ng-controller="TerminalController")
+              #terminal.tab-pane(ng-class="{active:tab=='terminal'}" role='tabpanel', ng-controller="TerminalController")
                 include templates/terminal.static.jade
               #timelapse.tab-pane(role='tabpanel') 5...
 
