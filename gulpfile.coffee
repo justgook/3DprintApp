@@ -32,15 +32,13 @@ imagemin = require 'gulp-imagemin'
 pngcrush = require 'imagemin-pngcrush'
 
 gulp.task "staticCopy", ->
-    gulp.src "app/assets/**/*"
-      .pipe newer BUILD_FOLDER #change to gulp-change
-      .pipe imagemin progressive: true, svgoPlugins: [removeViewBox: false], use: [do pngcrush]
-      .pipe rename (path)->
-        path.dirname = path.dirname.replace /^assets/, ""
-        console.log "file #{path.dirname}/#{path.basename}#{path.extname} copy to #{BUILD_FOLDER}/#{path.dirname}/#{path.basename}#{path.extname} ..."
-      .pipe gulp.dest BUILD_FOLDER
-
-
+  gulp.src "app/assets/**/*"
+  .pipe newer BUILD_FOLDER #change to gulp-change
+  .pipe imagemin progressive: true, svgoPlugins: [removeViewBox: false], use: [do pngcrush]
+  .pipe rename (path)->
+    path.dirname = path.dirname.replace /^assets/, ""
+    console.log "file #{path.dirname}/#{path.basename}#{path.extname} copy to #{BUILD_FOLDER}/#{path.dirname}/#{path.basename}#{path.extname} ..."
+  .pipe gulp.dest BUILD_FOLDER
 
 
 gulp.task "watchify", ->
@@ -50,7 +48,7 @@ gulp.task "watchify", ->
   bundler = watchify browserify BUNDLE_ENTER, watchify.args
   rebundle = ->
     return bundler.bundle()
-      # log errors if they happen
+    # log errors if they happen
     .on 'error', (e)->
       console.log 'Browserify Error', e
       return
@@ -63,21 +61,19 @@ gulp.task "watchify", ->
 
 gulp.task "staticJade", ->
   gulp.src "app/**/*.static.jade"
-    .pipe cache "staticJade"
-    .pipe do ->
-      through2.obj (file, enc, cb)->
-        try
-          content = String(file.contents)
-          # content = pp.preprocess content, process.env, "js"
-          file.contents = new Buffer do jade.compile content, filename: file.path
-          file.path = file.path.replace ".static.jade", '.html'
-          this.push file
-        catch e
-          console.log e
-        do cb
-    .pipe gulp.dest BUILD_FOLDER
-
-
+  .pipe cache "staticJade"
+  .pipe do ->
+    through2.obj (file, enc, cb)->
+      try
+        content = String(file.contents)
+        # content = pp.preprocess content, process.env, "js"
+        file.contents = new Buffer do jade.compile content, filename: file.path
+        file.path = file.path.replace ".static.jade", '.html'
+        this.push file
+      catch e
+        console.log e
+      do cb
+  .pipe gulp.dest BUILD_FOLDER
 
 
 stylusIconFont = require "stylus-iconfont"
@@ -87,37 +83,37 @@ fontFactory = new stylusIconFont glyphsDir: "app/glyphs", outputDir: BUILD_FOLDE
 gulp.task 'stylus', ->
   gulp.src 'app/**/*.styl'
 #    .pipe cache "stylus"
-    .pipe do ->
-      through2.obj (file, enc, cb)->
-        opts = paths: []
-        opts.filename ?= file.path
-        # opts.paths = opts.paths.concat([path.dirname(file.path)])
-        opts.paths.push ["node_modules/"]...
-        try
-          css = stylus file.contents.toString('utf8'), opts
-            .set('include css', true)
-            .define 'url', stylus.url()
-            .use fontFactory.register
-            .render (err, css)=>
-              throw(err) if err
-              file.contents = new Buffer css
-              file.path = gutil.replaceExtension file.path, '.css'
-              @push file
-              do cb
-        catch e
-          console.log do e.toString
+  .pipe do ->
+    through2.obj (file, enc, cb)->
+      opts =
+        paths: []
+      opts.filename ?= file.path
+      # opts.paths = opts.paths.concat([path.dirname(file.path)])
+      opts.paths.push ["node_modules/"]...
+      try
+        css = stylus file.contents.toString('utf8'), opts
+        .set('include css', true)
+        .define 'url', stylus.url()
+        .use fontFactory.register
+        .render (err, css)=>
+          throw(err) if err
+          file.contents = new Buffer css
+          file.path = gutil.replaceExtension file.path, '.css'
+          @push file
           do cb
-    .pipe gulp.dest BUILD_FOLDER
-    .on 'end', ->
-      do fontFactory.run
+      catch e
+        console.log do e.toString
+        do cb
+  .pipe gulp.dest BUILD_FOLDER
+  .on 'end', ->
+    do fontFactory.run
   return
 
 
-
 gulp.task "startSertver", (next)->
-  browserSync "#{BUILD_FOLDER}/**/*", open: false, server: baseDir: BUILD_FOLDER
+  browserSync "#{BUILD_FOLDER}/**/*", open: false, server:
+    baseDir: BUILD_FOLDER
   do next
-
 
 
 gulp.task "watch", ->
@@ -138,10 +134,9 @@ gulp.task 'cliServer', ->
     port: 5000
 
 
+gulp.task 'default', gulpsync.sync ["build", "watch", "startSertver"], 'default'
 
-gulp.task 'default', gulpsync.sync ["build", "watch", "startSertver"]
-
-gulp.task 'startWithServer', gulpsync.sync ["build", "watch", "cliServer"]
+gulp.task 'startWithServer', gulpsync.sync ["build", "watch", "cliServer"], 'startWithServer'
 
 # gulp.taskt "clean", []
 

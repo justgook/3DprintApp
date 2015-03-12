@@ -13,8 +13,6 @@ process.on 'message', (m)->
   io.emit m.type, m.data
 
 
-
-
 serveStatic = require('serve-static')
 
 app.use serveStatic('#{__dirname}/../public', {'index': ['index.html', 'index.htm']})

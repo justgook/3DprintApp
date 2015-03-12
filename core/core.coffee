@@ -19,8 +19,7 @@ class Core extends EventEmitter
     @on "out-print", @outPrint
 
     @storage = null
-    # @on "in-storage", @parse
-    # @on "out-storage", @parse
+
 
   startServer: =>
     @server = fork "#{__dirname}/server.coffee"
@@ -30,7 +29,7 @@ class Core extends EventEmitter
     do @server.kill
 
   inServer: =>
-   @server.send e.data
+    @server.send e.data
 
   outServer: (message)->
     @emit message.type, message.data
@@ -56,7 +55,7 @@ class Core extends EventEmitter
       @print.send 'next'
 
 
-  startPrint:->
+  startPrint: ->
     @print = fork "#{__dirname}/print.coffee"
     @print.on 'message', (data)=> @emit "out-print", data
 
@@ -75,7 +74,6 @@ class Core extends EventEmitter
     if message[0] is 'line'
       @emit 'in-serial', message: ['write', message[1]]
       @printerWaitForNextLineSend = true
-      # @print.send 'next'
     @server.send type: 'out-print', data: message
 
 

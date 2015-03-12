@@ -6,17 +6,17 @@ Q = require 'q'
 liner = null
 #TODO MOVE IT TO CLASS!!!
 moveMeToClass = ->
-  liner = new stream.Transform( { objectMode: true } )
+  liner = new stream.Transform({objectMode: true})
 
   liner._transform = (chunk, encoding, done)->
-     data = chunk.toString()
-     if this._lastLineData then data = this._lastLineData + data
+    data = chunk.toString()
+    if this._lastLineData then data = this._lastLineData + data
 
-     lines = data.split('\n')
-     this._lastLineData = lines.splice(lines.length-1,1)[0]
+    lines = data.split('\n')
+    this._lastLineData = lines.splice(lines.length - 1, 1)[0]
 
-     lines.forEach(this.push.bind(this))
-     done()
+    lines.forEach(this.push.bind(this))
+    done()
 
   liner._flush = (done)->
     if (this._lastLineData) then this.push(this._lastLineData)
@@ -25,7 +25,6 @@ moveMeToClass = ->
 
 
 moveMeToClass()
-
 
 
 class Printer
@@ -66,7 +65,7 @@ class Printer
       @canSend = Q.defer()
       line = liner.read()
       if line
-        process.send ['line', line+'\r']
+        process.send ['line', line + '\r']
       else
         process.send 'end-print'
         do @stop

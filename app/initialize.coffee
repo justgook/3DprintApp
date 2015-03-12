@@ -3,7 +3,6 @@ require 'angular-animate'
 module.exports = angular.module 'application', ['ngAnimate']
 
 
-
 .service 'CoreService', require './services/CoreService.coffee'
 .service 'FilesService', require './services/FilesService.coffee'
 

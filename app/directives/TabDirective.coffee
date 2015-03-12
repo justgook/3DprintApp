@@ -2,11 +2,10 @@ module.exports = ($rootScope)->
   restrict: 'A'
   # templateUrl: "templates/terminal.html"
   controller: ($scope, SerialService)->
-
     $scope.people = [
-        { label: 'Joe'},
-        { label: 'Mike'},
-        { label: 'Diane'}
+      {label: 'Joe'},
+      {label: 'Mike'},
+      {label: 'Diane'}
     ]
     $scope.inputValue = ""
     $scope.messages = SerialService.data

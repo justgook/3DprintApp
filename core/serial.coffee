@@ -3,7 +3,7 @@ serialport = require 'serialport'
 SerialPort = serialport.SerialPort
 
 class SerialConnection
-  constructor:->
+  constructor: ->
     @connection = null
     @port = null
     @baudrate = null
